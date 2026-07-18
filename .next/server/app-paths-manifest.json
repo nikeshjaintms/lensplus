@@ -1,5 +1,0 @@
-{
-  "/icon.png/route": "app/icon.png/route.js",
-  "/page": "app/page.js",
-  "/challenge-pass/page": "app/challenge-pass/page.js"
-}
