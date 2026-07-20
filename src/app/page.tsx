@@ -20,6 +20,8 @@ import {
   Quote,
 } from "lucide-react";
 import { SiteLayout } from "@/components/SiteLayout";
+import { GoogleReviews } from "@/components/GoogleReviews";
+import { PremiumHero } from "@/components/PremiumHero";
 import { pillars, instructors } from "@/data/studio";
 import heroImg from "@/assets/fe2b586c-c331-44f0-8e7a-33a839238d76.png";
 import communityImg from "@/assets/community.jpg";
@@ -32,8 +34,6 @@ const fadeUp: Variants = {
   visible: { opacity: 1, y: 0, transition: { duration: 0.9 } },
 };
 const stagger: Variants = { visible: { transition: { staggerChildren: 0.15 } } };
-
-
 
 /* ─── features ─────────────────────────────────────────────────────── */
 const features = [
@@ -67,28 +67,6 @@ const features = [
   },
 ];
 
-/* ─── reviews ──────────────────────────────────────────────────────── */
-const reviews = [
-  {
-    name: "Aline Marchioro",
-    date: "June 2026",
-    text: "Really lovely place! Owner was very friendly and helpful. Highly recommend to everyone looking for a great Pilates session.",
-    initial: "A",
-  },
-  {
-    name: "Paul K",
-    date: "June 2026",
-    text: "Outstanding ambience. The training session is so polite and professional. Best studio in town — hands down.",
-    initial: "P",
-  },
-  {
-    name: "Joe Angel",
-    date: "June 2026",
-    text: "I'm loving the whole experience. The environment is so calming and the instructors are top notch.",
-    initial: "J",
-  },
-];
-
 /* ─── gallery videos ─────────────────────────────────────────────────── */
 const videos = [
   { src: "/videos/1.mp4", title: "Standing Reformer Lunge", sub: "Leg strength & balance" },
@@ -119,186 +97,6 @@ function useCounter(target: number, duration = 1800, start = false) {
   return count;
 }
 
-/* ─── single stat card ──────────────────────────────────────────────── */
-function StatCard({
-  icon: Icon,
-  value,
-  label,
-  suffix,
-  accent,
-  delay,
-}: {
-  icon: React.ElementType;
-  value: string;
-  label: string;
-  suffix: string;
-  accent: string;
-  delay: number;
-}) {
-  const [inView, setInView] = useState(false);
-  const ref = useRef<HTMLDivElement>(null);
-  const numericTarget = parseFloat(value);
-  const isDecimal = value.includes(".");
-  const count = useCounter(isDecimal ? numericTarget * 10 : numericTarget, 1600, inView);
-  const displayCount = isDecimal ? (count / 10).toFixed(1) : count.toString();
-
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      ([entry]) => { if (entry.isIntersecting) setInView(true); },
-      { threshold: 0.3 }
-    );
-    if (ref.current) observer.observe(ref.current);
-    return () => observer.disconnect();
-  }, []);
-
-  return (
-    <motion.div
-      ref={ref}
-      initial={{ opacity: 0, y: 40 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, margin: "-60px" }}
-      transition={{ duration: 0.7, delay, ease: [0.22, 1, 0.36, 1] }}
-      className="group relative flex flex-col items-center gap-3 sm:gap-5 rounded-[1.5rem] sm:rounded-[2rem] p-5 sm:p-8 text-center cursor-default transition-all duration-300 hover:-translate-y-2"
-      style={{
-        background: "rgba(255,255,255,0.06)",
-        backdropFilter: "blur(20px)",
-        WebkitBackdropFilter: "blur(20px)",
-        border: "1px solid rgba(255,255,255,0.12)",
-        boxShadow: "0 8px 40px rgba(0,0,0,0.3), inset 0 1px 0 rgba(255,255,255,0.1)",
-      }}
-    >
-      {/* Subtle gradient overlay */}
-      <div
-        className="pointer-events-none absolute inset-0 rounded-[2rem] opacity-0 group-hover:opacity-100 transition-opacity duration-500"
-        style={{ background: `radial-gradient(ellipse at 50% 0%, ${accent}18, transparent 70%)` }}
-      />
-
-      {/* Glow on hover */}
-      <div
-        className="pointer-events-none absolute -inset-px rounded-[2rem] opacity-0 group-hover:opacity-100 transition-opacity duration-500"
-        style={{ boxShadow: `0 0 40px ${accent}25` }}
-      />
-
-      {/* Icon container */}
-      <div
-        className="relative flex size-14 items-center justify-center rounded-full border transition-all duration-500 group-hover:scale-110"
-        style={{
-          background: `${accent}15`,
-          borderColor: `${accent}35`,
-          boxShadow: `0 0 20px ${accent}20`,
-        }}
-      >
-        {/* Icon glow ring on hover */}
-        <div
-          className="absolute inset-0 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-500 blur-sm"
-          style={{ background: `${accent}30` }}
-        />
-        <Icon className="relative z-10 size-6 transition-transform duration-500 group-hover:scale-110" style={{ color: accent }} strokeWidth={1.5} />
-      </div>
-
-      {/* Number */}
-      <div className="relative">
-        <p className="font-display text-[2.2rem] sm:text-[3.5rem] md:text-[4rem] leading-none text-white tracking-tight">
-          {inView ? displayCount : "0"}
-          <span style={{ color: accent }} className="ml-0.5">{suffix}</span>
-        </p>
-      </div>
-
-      {/* Label */}
-      <p className="text-[0.6rem] uppercase tracking-[0.28em] text-white/45 font-bold leading-relaxed">
-        {label}
-      </p>
-
-      {/* Bottom accent line — expands on hover */}
-      <div
-        className="absolute bottom-0 left-1/2 -translate-x-1/2 h-[2px] w-0 group-hover:w-14 rounded-full transition-all duration-500"
-        style={{ background: `linear-gradient(90deg, transparent, ${accent}, transparent)` }}
-      />
-    </motion.div>
-  );
-}
-
-/* ─── full stats section ────────────────────────────────────────────── */
-function StatsSection() {
-  const statItems = [
-    { icon: Star,       value: "5.0", label: "Google Rating",    suffix: "",  accent: "#00C8D7", delay: 0    },
-    { icon: Users,      value: "500", label: "Happy Members",    suffix: "+", accent: "#7EE8FA", delay: 0.1  },
-    { icon: Award,      value: "4",   label: "Expert Trainers",  suffix: "",  accent: "#00AFC2", delay: 0.2  },
-    { icon: TrendingUp, value: "3",   label: "Years Experience", suffix: "+", accent: "#00C8D7", delay: 0.3  },
-  ];
-
-  return (
-    <section className="relative overflow-hidden py-20">
-      {/* ── Layered background ── */}
-      {/* Deep navy base — seamless continuation from hero */}
-      <div className="absolute inset-0" style={{ background: "linear-gradient(180deg, #0A0F1E 0%, #07111F 40%, #091525 100%)" }} />
-
-      {/* Large radial teal glows */}
-      <div className="pointer-events-none absolute -left-40 top-1/2 -translate-y-1/2 w-[600px] h-[600px] rounded-full bg-[#00C8D7]/12 blur-[120px]" />
-      <div className="pointer-events-none absolute -right-40 top-1/2 -translate-y-1/2 w-[500px] h-[500px] rounded-full bg-[#00AFC2]/10 blur-[100px]" />
-      <div className="pointer-events-none absolute left-1/2 top-0 -translate-x-1/2 w-[700px] h-[300px] rounded-full bg-[#00C8D7]/8 blur-[80px]" />
-
-      {/* Abstract curved line */}
-      <svg
-        className="pointer-events-none absolute inset-0 w-full h-full opacity-[0.07]"
-        preserveAspectRatio="none"
-        viewBox="0 0 1440 320"
-        fill="none"
-        xmlns="http://www.w3.org/2000/svg"
-      >
-        <path
-          d="M0,160 C360,280 720,40 1080,200 C1260,280 1360,200 1440,160"
-          stroke="#00C8D7"
-          strokeWidth="1.5"
-          fill="none"
-        />
-        <path
-          d="M0,200 C300,100 600,260 900,160 C1100,100 1300,220 1440,180"
-          stroke="#7EE8FA"
-          strokeWidth="1"
-          fill="none"
-        />
-      </svg>
-
-      {/* Minimal dot grid */}
-      <div
-        className="pointer-events-none absolute inset-0 opacity-[0.04]"
-        style={{
-          backgroundImage: "radial-gradient(circle, #00C8D7 1px, transparent 1px)",
-          backgroundSize: "40px 40px",
-        }}
-      />
-
-      {/* Top & bottom accent lines */}
-      <div className="absolute top-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-[#00C8D7]/40 to-transparent" />
-      <div className="absolute bottom-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-[#00C8D7]/20 to-transparent" />
-
-      {/* ── Content ── */}
-      <div className="relative z-10 mx-auto max-w-7xl px-6 lg:px-10">
-      {/* ── Stats section label ── */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6 }}
-          className="flex items-center justify-center gap-3 sm:gap-4 mb-10 sm:mb-14"
-        >
-          <div className="h-px w-10 sm:w-16 bg-gradient-to-r from-transparent to-[#00C8D7]/60" />
-          <p className="eyebrow text-[#00C8D7]/70 tracking-[0.3em]">Studio Achievements</p>
-          <div className="h-px w-10 sm:w-16 bg-gradient-to-l from-transparent to-[#00C8D7]/60" />
-        </motion.div>
-
-        {/* Cards grid */}
-        <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-5 lg:gap-6">
-          {statItems.map((s) => (
-            <StatCard key={s.label} {...s} />
-          ))}
-        </div>
-      </div>
-    </section>
-  );
-}
-
 /* ═══════════════════════════════════════════════════════════════════ */
 export default function Home() {
   const heroRef = useRef<HTMLDivElement>(null);
@@ -308,15 +106,6 @@ export default function Home() {
   const heroScale = useTransform(scrollYProgress, [0, 1], [1, 1.1]);
 
   const sliderRef = useRef<HTMLDivElement>(null);
-  const [activeReview, setActiveReview] = useState(0);
-
-  // Auto-rotate testimonials every 4 seconds
-  useEffect(() => {
-    const reviewInterval = setInterval(() => {
-      setActiveReview((prev) => (prev + 1) % reviews.length);
-    }, 4000);
-    return () => clearInterval(reviewInterval);
-  }, []);
 
   // Auto-scroll logic for the gallery (continuous slow scroll)
   useEffect(() => {
@@ -362,106 +151,12 @@ export default function Home() {
       {/* ═══════════════════════════════════════════
           1. HERO — Cinematic full-screen with refined animations
       ═══════════════════════════════════════════ */}
-      <section
-        ref={heroRef}
-        className="relative h-[100svh] min-h-[700px] flex flex-col overflow-hidden bg-[#0A0F1E]"
-      >
-        <motion.div style={{ y: heroY, scale: heroScale }} className="absolute inset-0 z-0">
-          <Image
-            src={heroImg}
-            alt="N24 Pilates Studio"
-            fill
-            className="object-cover object-center opacity-85"
-            priority
-          />
-        </motion.div>
-
-        {/* Enhanced gradient layers for depth */}
-        <div className="absolute inset-0 bg-gradient-to-r from-[#0A0F1E] via-[#0A0F1E]/60 to-transparent z-10" />
-        <div className="absolute inset-0 bg-gradient-to-t from-[#0A0F1E] via-transparent to-[#0A0F1E]/30 z-10" />
-        {/* Solid gradient at the bottom to completely hide the background wall text under the cards */}
-        <div className="absolute bottom-0 left-0 w-full h-[400px] bg-gradient-to-t from-[#0A0F1E] via-[#0A0F1E]/95 to-transparent z-10 pointer-events-none" />
-
-        <div className="absolute top-1/4 right-1/4 w-[500px] h-[500px] rounded-full bg-[#00C8D7]/15 blur-[120px] z-10 pointer-events-none mix-blend-screen" />
-
-        <motion.div
-          style={{ opacity: heroOpacity }}
-          className="relative z-20 flex flex-col justify-center flex-1 mx-auto max-w-7xl w-full px-6 lg:px-10"
-        >
-          <motion.div
-            initial="hidden"
-            animate="visible"
-            variants={stagger}
-            className="max-w-2xl mt-12"
-          >
-            <motion.div variants={fadeUp} className="flex items-center gap-4 mb-8">
-              <div className="h-px w-16 bg-gradient-to-r from-[#00C8D7] to-transparent" />
-              <span className="text-[0.65rem] font-bold uppercase tracking-[0.3em] text-white">
-                Applecross · Perth
-              </span>
-            </motion.div>
-
-            <motion.h1
-              variants={fadeUp}
-              className="font-display text-[2.8rem] sm:text-[3.8rem] md:text-[5rem] lg:text-[6.5rem] leading-[1.0] text-white tracking-tight"
-            >
-              Move <span className="italic text-[#00C8D7]">Better.</span> Live{" "}
-              <span className="italic text-white/90">Lighter.</span>
-            </motion.h1>
-
-            <motion.p
-              variants={fadeUp}
-              className="mt-5 sm:mt-8 text-[0.95rem] sm:text-[1.05rem] leading-relaxed text-white/70 font-light max-w-[min(90%,24rem)]"
-            >
-              Perth&apos;s premier boutique Pilates studio. Reformer classes, infrared saunas, and
-              expert coaching — designed to transform you.
-            </motion.p>
-
-            <motion.div variants={fadeUp} className="mt-8 sm:mt-12 flex flex-col xs:flex-row flex-wrap gap-3 sm:gap-5">
-              <Link
-                href="/schedule"
-                className="group relative overflow-hidden rounded-full bg-white px-8 sm:px-10 py-4 text-[0.72rem] sm:text-[0.75rem] font-bold uppercase tracking-[0.2em] text-[#0A0F1E] transition-all duration-500 hover:scale-[1.02] hover:shadow-[0_0_40px_rgba(255,255,255,0.3)]"
-              >
-                <span className="relative z-10 flex items-center gap-3">
-                  Book a Class
-                  <ArrowRight className="size-4 transition-transform group-hover:translate-x-1" />
-                </span>
-                <div className="absolute inset-0 bg-gradient-to-r from-white via-[#E2F8FA] to-white opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-              </Link>
-              <Link
-                href="/pricing"
-                className="group flex items-center justify-center gap-2 rounded-full border border-white/20 px-8 sm:px-10 py-4 text-[0.72rem] sm:text-[0.75rem] font-bold uppercase tracking-[0.2em] text-white backdrop-blur-md transition-all duration-500 hover:border-white/60 hover:bg-white/10"
-              >
-                View Pricing
-              </Link>
-            </motion.div>
-          </motion.div>
-        </motion.div>
-
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 1.5, duration: 1 }}
-          className="absolute bottom-12 left-1/2 -translate-x-1/2 z-20 flex flex-col items-center gap-3"
-        >
-          
-          <motion.div
-            animate={{ height: ["0%", "100%", "0%"], top: ["0%", "0%", "100%"] }}
-            transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
-            className="w-px h-16 bg-white/20 relative overflow-hidden"
-          >
-            <motion.div className="absolute left-0 w-full h-full bg-[#00C8D7]" />
-          </motion.div>
-        </motion.div>
-      </section>
+      <div ref={heroRef}>
+        <PremiumHero heroY={heroY} heroOpacity={heroOpacity} heroScale={heroScale} />
+      </div>
 
       {/* ═══════════════════════════════════════════
-          2. STUDIO HIGHLIGHTS — Premium floating glassmorphism cards
-      ═══════════════════════════════════════════ */}
-      <StatsSection />
-
-      {/* ═══════════════════════════════════════════
-          3. WHY CHOOSE US — Premium glowing cards
+          2. WHY CHOOSE US — Premium glowing cards
       ═══════════════════════════════════════════ */}
       <section className="bg-white py-14 sm:py-20 relative overflow-hidden">
         <div className="absolute top-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-[#00C8D7]/20 to-transparent" />
@@ -787,82 +482,10 @@ export default function Home() {
             >
               Real stories, <em className="text-[#00C8D7] font-light">real results</em>
             </motion.h2>
-            <motion.div
-              variants={fadeUp}
-              className="inline-flex items-center gap-3 bg-white shadow-premium rounded-full px-8 py-3 border border-[#00C8D7]/10"
-            >
-              <div className="flex text-yellow-400 gap-1.5">
-                {[1, 2, 3, 4, 5].map((s) => (
-                  <Star key={s} className="size-5 fill-current" />
-                ))}
-              </div>
-              <span className="text-[0.75rem] font-bold uppercase tracking-[0.2em] text-[#0A0F1E]">
-                5.0 <span className="text-[#5B6B70] font-normal">· Google Reviews</span>
-              </span>
-            </motion.div>
           </motion.div>
 
-          <div className="relative max-w-4xl mx-auto">
-            <AnimatePresence mode="wait">
-              <motion.div
-                key={activeReview}
-                initial={{ opacity: 0, scale: 0.95, filter: "blur(10px)" }}
-                animate={{ opacity: 1, scale: 1, filter: "blur(0px)" }}
-                exit={{ opacity: 0, scale: 0.95, filter: "blur(10px)" }}
-                transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
-                className="bg-white rounded-[28px] p-12 md:p-16 text-center shadow-soft border border-[#DDEAF2] relative overflow-hidden"
-              >
-                <div className="absolute top-0 left-0 w-full h-2 bg-gradient-to-r from-[#00C8D7] to-[#7EE8FA]" />
-                <Quote className="size-12 text-[#00C8D7]/20 mx-auto mb-8" />
-                <p className="font-display text-3xl md:text-4xl text-[#0A0F1E] leading-relaxed mb-12">
-                  &ldquo;{reviews[activeReview].text}&rdquo;
-                </p>
-                <div className="flex items-center justify-center gap-5">
-                  <div className="size-14 rounded-full bg-gradient-to-br from-[#00C8D7] to-[#00AFC2] flex items-center justify-center font-display text-2xl text-white shadow-[0_4px_20px_rgba(0,200,215,0.4)]">
-                    {reviews[activeReview].initial}
-                  </div>
-                  <div className="text-left">
-                    <p className="text-[#0A0F1E] font-bold text-[1rem]">
-                      {reviews[activeReview].name}
-                    </p>
-                    <p className="text-[#5B6B70] font-light text-[0.8rem] mt-0.5">
-                      {reviews[activeReview].date}
-                    </p>
-                  </div>
-                </div>
-              </motion.div>
-            </AnimatePresence>
-
-            <div className="flex items-center justify-center gap-6 mt-12">
-              <button
-                onClick={() => setActiveReview((p) => (p - 1 + reviews.length) % reviews.length)}
-                className="size-14 rounded-full bg-white border border-[#00C8D7]/20 shadow-premium flex items-center justify-center text-[#0A0F1E] hover:border-[#00C8D7] hover:bg-[#00C8D7] hover:text-white transition-all duration-300"
-                aria-label="Previous review"
-              >
-                <ChevronLeft className="size-5" />
-              </button>
-              <div className="flex gap-3">
-                {reviews.map((_, i) => (
-                  <button
-                    key={i}
-                    onClick={() => setActiveReview(i)}
-                    className={`rounded-full transition-all duration-500 ${
-                      i === activeReview
-                        ? "w-10 h-2.5 bg-[#00C8D7]"
-                        : "size-2.5 bg-[#00C8D7]/20 hover:bg-[#00C8D7]/50"
-                    }`}
-                    aria-label={`Review ${i + 1}`}
-                  />
-                ))}
-              </div>
-              <button
-                onClick={() => setActiveReview((p) => (p + 1) % reviews.length)}
-                className="size-14 rounded-full bg-white border border-[#00C8D7]/20 shadow-premium flex items-center justify-center text-[#0A0F1E] hover:border-[#00C8D7] hover:bg-[#00C8D7] hover:text-white transition-all duration-300"
-                aria-label="Next review"
-              >
-                <ChevronRight className="size-5" />
-              </button>
-            </div>
+          <div className="relative max-w-5xl mx-auto mt-12">
+            <GoogleReviews />
           </div>
         </div>
       </section>

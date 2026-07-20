@@ -67,7 +67,19 @@ const answerVariants: Variants = {
   open: { height: "auto", opacity: 1, transition: { duration: 0.38, ease: "easeOut" } },
 };
 
-function AccordionItem({ q, a, index, isOpen, onToggle }: { q: string; a: string; index: number; isOpen: boolean; onToggle: () => void }) {
+function AccordionItem({
+  q,
+  a,
+  index,
+  isOpen,
+  onToggle,
+}: {
+  q: string;
+  a: string;
+  index: number;
+  isOpen: boolean;
+  onToggle: () => void;
+}) {
   return (
     <motion.div
       initial={{ opacity: 0, y: 16 }}
@@ -177,11 +189,11 @@ export default function Faqs() {
                   {cat.items.map((item, ii) => {
                     const id = `${ci}-${ii}`;
                     return (
-                      <AccordionItem 
-                        key={id} 
-                        q={item.q} 
-                        a={item.a} 
-                        index={ii} 
+                      <AccordionItem
+                        key={id}
+                        q={item.q}
+                        a={item.a}
+                        index={ii}
                         isOpen={openId === id}
                         onToggle={() => setOpenId(openId === id ? null : id)}
                       />

@@ -32,7 +32,7 @@ export function PageHero({
       {/* Dynamic premium glows */}
       <div className="pointer-events-none absolute -right-32 top-0 size-[300px] sm:size-[500px] rounded-full bg-[#00C8D7]/20 blur-[130px]" />
       <div className="pointer-events-none absolute -left-32 bottom-0 size-[250px] sm:size-[400px] rounded-full bg-[#00AFC2]/15 blur-[120px]" />
-      
+
       {/* Subtle overlay gradient for depth */}
       <div className="absolute inset-0 bg-gradient-to-b from-transparent via-[#081221]/40 to-[#081221]" />
 
@@ -57,9 +57,7 @@ export function PageHero({
 
         <h1 className="font-display text-[2.5rem] sm:text-[3.5rem] md:text-[5rem] lg:text-[6rem] xl:text-[7rem] leading-[1.0] text-white">
           {title}
-          {accent && (
-            <span className="italic text-[#00C8D7] font-light"> {accent}</span>
-          )}
+          {accent && <span className="italic text-[#00C8D7] font-light"> {accent}</span>}
         </h1>
 
         {subtitle && (

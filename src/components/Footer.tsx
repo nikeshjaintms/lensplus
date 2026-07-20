@@ -137,9 +137,7 @@ export function Footer() {
                 <div className="mt-0.5 flex size-8 shrink-0 items-center justify-center rounded-full bg-white/5 border border-white/10 group-hover:border-[#00C8D7]/50 transition-colors">
                   <Phone className="size-3.5 text-[#00C8D7]" strokeWidth={2} />
                 </div>
-                <span className="group-hover:text-white transition-colors pt-1">
-                  0478 336 630
-                </span>
+                <span className="group-hover:text-white transition-colors pt-1">0478 336 630</span>
               </li>
               <li className="flex items-start gap-3 sm:gap-4 group cursor-pointer">
                 <div className="mt-0.5 flex size-8 shrink-0 items-center justify-center rounded-full bg-white/5 border border-white/10 group-hover:border-[#00C8D7]/50 transition-colors">
@@ -154,7 +152,9 @@ export function Footer() {
                   <MapPin className="size-3.5 text-[#00C8D7]" strokeWidth={2} />
                 </div>
                 <span className="group-hover:text-white transition-colors leading-relaxed pt-1">
-                  Unit G3/3 Kintail Rd,<br />Applecross WA 6153
+                  Unit G3/3 Kintail Rd,
+                  <br />
+                  Applecross WA 6153
                 </span>
               </li>
             </ul>

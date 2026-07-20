@@ -7,18 +7,25 @@ interface TypewriterTextProps {
   delay?: number;
 }
 
-export function TypewriterText({ text, speed = 25, delay = 150, className = "" }: TypewriterTextProps) {
+export function TypewriterText({
+  text,
+  speed = 25,
+  delay = 150,
+  className = "",
+}: TypewriterTextProps) {
   const [displayedText, setDisplayedText] = useState("");
   const [isTyping, setIsTyping] = useState(false);
 
   useEffect(() => {
     // Reset state when component mounts or text changes
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     setDisplayedText("");
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     setIsTyping(true);
 
     let currentIndex = 0;
     let intervalId: NodeJS.Timeout;
-    
+
     // Add a slight delay before typing starts to let the container expand
     const startDelay = setTimeout(() => {
       intervalId = setInterval(() => {
@@ -40,17 +47,17 @@ export function TypewriterText({ text, speed = 25, delay = 150, className = "" }
 
   return (
     <span className={`relative ${className}`}>
-      {displayedText.split('\n').map((line, i, arr) => (
+      {displayedText.split("\n").map((line, i, arr) => (
         <React.Fragment key={i}>
           {line}
           {i < arr.length - 1 && <br />}
         </React.Fragment>
       ))}
-      <span 
+      <span
         className={`inline-block w-[2px] h-[1.1em] bg-[#00AFC2] ml-[2px] align-text-bottom transition-opacity duration-200 ${
-          isTyping ? 'opacity-100 animate-pulse' : 'opacity-0 hidden'
-        }`} 
-        style={isTyping ? { animationDuration: '0.8s' } : undefined}
+          isTyping ? "opacity-100 animate-pulse" : "opacity-0 hidden"
+        }`}
+        style={isTyping ? { animationDuration: "0.8s" } : undefined}
       />
     </span>
   );

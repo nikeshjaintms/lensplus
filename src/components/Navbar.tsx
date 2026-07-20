@@ -40,11 +40,16 @@ export function Navbar() {
     } else {
       document.body.style.overflow = "";
     }
-    return () => { document.body.style.overflow = ""; };
+    return () => {
+      document.body.style.overflow = "";
+    };
   }, [open]);
 
   // Close menu on route change
-  useEffect(() => { setOpen(false); }, [pathname]);
+  useEffect(() => {
+    // eslint-disable-next-line react-hooks/set-state-in-effect
+    setOpen(false);
+  }, [pathname]);
 
   const isDark = isHome && !scrolled;
 
@@ -54,7 +59,7 @@ export function Navbar() {
         className={twMerge(
           "fixed z-50 transition-all duration-500 w-full lg:w-[94%] lg:max-w-7xl lg:left-1/2 lg:-translate-x-1/2 lg:top-5 lg:rounded-full",
           scrolled
-            ? "bg-white/90 py-2 lg:py-3 shadow-[0_8px_32px_rgba(0,0,0,0.12)] backdrop-blur-xl top-0 border border-white/60 lg:border"
+            ? "bg-white/70 py-2 lg:py-3 shadow-[0_8px_32px_rgba(0,0,0,0.08)] backdrop-blur-2xl top-0 border border-white/40 lg:border"
             : isHome
               ? "bg-transparent py-3 lg:py-5 top-0 border border-transparent"
               : "bg-white/80 py-2 lg:py-4 shadow-md backdrop-blur-lg top-0 border border-white/40 lg:border",
@@ -74,15 +79,19 @@ export function Navbar() {
                   key={l.to}
                   href={l.to}
                   className={clsx(
-                    "whitespace-nowrap text-[0.7rem] font-semibold uppercase tracking-[0.16em] transition-colors duration-200",
+                    "group relative whitespace-nowrap text-[0.7rem] font-semibold uppercase tracking-[0.16em] transition-colors duration-300 py-1",
                     isActive
                       ? "text-[#00C8D7]"
                       : isDark
-                        ? "text-white/75 hover:text-white"
+                        ? "text-white/80 hover:text-white"
                         : "text-[#5B6B70] hover:text-[#00C8D7]",
                   )}
                 >
                   {l.label}
+                  <span className={clsx(
+                    "absolute -bottom-1 left-0 h-[2px] bg-[#00C8D7] rounded-full transition-all duration-300",
+                    isActive ? "w-full opacity-100" : "w-0 opacity-0 group-hover:w-full group-hover:opacity-100"
+                  )} />
                 </Link>
               );
             })}
@@ -92,7 +101,7 @@ export function Navbar() {
           <div className="hidden lg:block">
             <Link
               href="/schedule"
-              className="rounded-full px-6 py-2.5 text-[0.7rem] font-bold uppercase tracking-[0.18em] transition-all duration-300 hover:scale-[1.03] bg-[#00C8D7] text-white shadow-[0_4px_16px_rgba(0,200,215,0.35)] hover:bg-[#00b5c4]"
+              className="rounded-full px-7 py-3 text-[0.7rem] font-bold uppercase tracking-[0.18em] transition-all duration-300 hover:-translate-y-0.5 bg-[#00C8D7] text-white shadow-[0_0_15px_rgba(0,200,215,0.4)] hover:shadow-[0_0_25px_rgba(0,200,215,0.6)] hover:bg-[#00b5c4]"
             >
               Book a Class
             </Link>
