@@ -20,7 +20,7 @@ export function TypewriterText({
     // Reset state when component mounts or text changes
     // eslint-disable-next-line react-hooks/set-state-in-effect
     setDisplayedText("");
-    // eslint-disable-next-line react-hooks/set-state-in-effect
+
     setIsTyping(true);
 
     let currentIndex = 0;

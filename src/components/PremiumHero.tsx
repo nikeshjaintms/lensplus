@@ -4,7 +4,7 @@ import React, { useState, useEffect } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { Variants, motion, MotionValue } from "framer-motion";
-import { ArrowRight, Star, Users, Award, TrendingUp, User, Activity } from "lucide-react";
+import { ArrowRight, Star, Users, Award, TrendingUp } from "lucide-react";
 import heroImg from "@/assets/fe2b586c-c331-44f0-8e7a-33a839238d76.png";
 
 function StatColumn({
@@ -32,7 +32,7 @@ function StatColumn({
         {/* Text Container */}
         <div className="flex flex-col">
           {/* Number */}
-          <span className="font-display text-[28px] md:text-[32px] xl:text-[36px] font-medium text-[#111827] leading-[1] transition-transform duration-300 group-hover:-translate-y-[2px]">
+          <span className="font-display text-[36px] md:text-[44px] xl:text-[48px] font-medium text-[#111827] leading-[1] transition-transform duration-300 group-hover:-translate-y-[2px]">
             {number}
           </span>
           {/* Label */}
@@ -230,7 +230,10 @@ export function PremiumHero({
             </motion.p>
 
             {/* CTA Buttons */}
-            <motion.div variants={fadeUp} className="flex flex-col sm:flex-row gap-5 w-full sm:w-auto">
+            <motion.div
+              variants={fadeUp}
+              className="flex flex-col sm:flex-row gap-5 w-full sm:w-auto"
+            >
               <Link
                 href="/schedule"
                 className="group relative flex items-center justify-center gap-3 overflow-hidden rounded-full bg-gradient-to-r from-[#16D9F5] to-[#0cb8d2] px-10 py-5 text-[0.85rem] font-bold uppercase tracking-[0.2em] text-[#071321] transition-all duration-500 hover:-translate-y-1.5 hover:shadow-[0_15px_35px_-5px_rgba(22,217,245,0.4)] w-full sm:w-auto"
@@ -269,49 +272,73 @@ export function PremiumHero({
 
           {/* Container */}
           <div className="relative bg-white border border-slate-100 rounded-[32px] md:rounded-[40px] shadow-[0_20px_80px_-15px_rgba(0,0,0,0.05)] py-12 px-6 sm:px-8 lg:py-12 lg:px-10 xl:py-16 xl:px-14 flex flex-col lg:flex-row items-center justify-between gap-12 lg:gap-8 xl:gap-10">
-
             {/* Column 1 (Content) */}
             <div className="w-full lg:flex-[0.85] lg:max-w-[340px] xl:max-w-[380px] text-center sm:text-left shrink-0 flex flex-col">
-              <motion.span variants={cardItemVariants} className="block text-[10px] md:text-[11px] font-bold uppercase tracking-[0.25em] text-[#9CA3AF] mb-3 lg:mb-4">
+              <motion.span
+                variants={cardItemVariants}
+                className="block text-[10px] md:text-[11px] font-bold uppercase tracking-[0.25em] text-[#9CA3AF] mb-3 lg:mb-4"
+              >
                 Studio Achievements
               </motion.span>
-              <motion.h2 variants={cardItemVariants} className="font-display text-[32px] sm:text-[36px] xl:text-[42px] font-medium text-[#111827] leading-[1.15] mb-4">
-                Not just a workout. <br className="hidden sm:block" />
-                A way of <span className="text-[#13B5C8]">life.</span>
+              <motion.h2
+                variants={cardItemVariants}
+                className="font-display text-[32px] sm:text-[36px] xl:text-[42px] font-medium text-[#111827] leading-[1.15] mb-4"
+              >
+                Not just a workout. <br className="hidden sm:block" />A way of{" "}
+                <span className="text-[#13B5C8]">life.</span>
               </motion.h2>
-              <motion.p variants={cardItemVariants} className="text-[13px] xl:text-[14px] text-[#6B7280] font-sans leading-relaxed max-w-[400px] mx-auto sm:mx-0">
-                Discover a premium Pilates experience designed to build strength, improve mobility, and create lasting wellness for every stage of your fitness journey.
+              <motion.p
+                variants={cardItemVariants}
+                className="text-[13px] xl:text-[14px] text-[#6B7280] font-sans leading-relaxed max-w-[400px] mx-auto sm:mx-0"
+              >
+                Discover a premium Pilates experience designed to build strength, improve mobility,
+                and create lasting wellness for every stage of your fitness journey.
               </motion.p>
             </div>
 
             {/* Divider */}
-            <motion.div variants={cardItemVariants} className="hidden lg:block w-px h-[120px] xl:h-[140px] bg-slate-100 shrink-0" />
+            <motion.div
+              variants={cardItemVariants}
+              className="hidden lg:block w-px h-[120px] xl:h-[140px] bg-slate-100 shrink-0"
+            />
 
             {/* Stats Grid */}
-            <div className="w-full lg:flex-1 grid grid-cols-1 sm:grid-cols-2 gap-8 lg:gap-10 xl:gap-12 lg:pl-6 xl:pl-10">
+            <div className="w-full lg:flex-1 grid grid-cols-1 sm:grid-cols-2 lg:flex lg:items-center gap-10 sm:gap-12 lg:gap-0 lg:justify-between">
               <StatColumn
                 icon={Star}
                 number="5.0"
                 label="Google Rating"
                 desc="Rated by our happy members."
               />
-              <StatColumn
-                icon={User}
-                number="Sessions"
-                label="PRIVATE"
-                desc="1-on-1 personalized training."
+              <motion.div
+                variants={cardItemVariants}
+                className="hidden lg:block w-px h-[64px] bg-slate-100 shrink-0 mx-2 xl:mx-4"
               />
               <StatColumn
                 icon={Users}
-                number="Classes"
-                label="SMALL GROUP"
-                desc="Intimate focused workouts."
+                number="500+"
+                label="Happy Members"
+                desc="Growing wellness community."
+              />
+              <motion.div
+                variants={cardItemVariants}
+                className="hidden lg:block w-px h-[64px] bg-slate-100 shrink-0 mx-2 xl:mx-4"
               />
               <StatColumn
-                icon={Activity}
-                number="Pilates"
-                label="REFORMER"
-                desc="Dynamic body conditioning."
+                icon={Award}
+                number="4"
+                label="Expert Trainers"
+                desc="Certified Pilates specialists."
+              />
+              <motion.div
+                variants={cardItemVariants}
+                className="hidden lg:block w-px h-[64px] bg-slate-100 shrink-0 mx-2 xl:mx-4"
+              />
+              <StatColumn
+                icon={TrendingUp}
+                number="3+"
+                label="Years Experience"
+                desc="Delivering proven results."
               />
             </div>
           </div>

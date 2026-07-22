@@ -10,7 +10,7 @@ export function GoogleReviews() {
     const timer = setTimeout(() => {
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
       const win = window as any;
-      if (win.eapps && typeof win.eapps.init === 'function') {
+      if (win.eapps && typeof win.eapps.init === "function") {
         try {
           win.eapps.init();
         } catch (e) {

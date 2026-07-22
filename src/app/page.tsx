@@ -69,14 +69,14 @@ const features = [
 
 /* ─── gallery videos ─────────────────────────────────────────────────── */
 const videos = [
-  { src: "/videos/1.mp4", title: "Standing Reformer Lunge", sub: "Leg strength & balance" },
-  { src: "/videos/2-wa.mp4", title: "Core Plank Series", sub: "Deep core activation" },
-  { src: "/videos/3-wa.mp4", title: "Hundred on Reformer", sub: "Build endurance" },
+  { src: "/videos/2-wa.mp4", title: "Standing Lunge with Hand Weights", sub: "Leg strength & balance" },
+  { src: "/videos/3-wa.mp4", title: "Infrared Sauna Session", sub: "Recovery & relaxation" },
+  { src: "/videos/1.mp4", title: "Supine Pilates Ring Series", sub: "Core & ring activation" },
+  { src: "/videos/5.mp4", title: "Side Kneeling Arm Series", sub: "Arm strength & posture" },
+  { src: "/videos/4.mp4", title: "Glute Bridging", sub: "Glute & core engagement" },
   { src: "/videos/6.mp4", title: "Footwork Series", sub: "Lower body alignment" },
-  { src: "/videos/5.mp4", title: "Elephant Stretch", sub: "Hamstring flexibility" },
-  { src: "/videos/4.mp4", title: "Bridging Exercise", sub: "Core & glutes" },
-  { src: "/videos/7.mp4", title: "Side Splits", sub: "Hip stability" },
-  { src: "/videos/8.mp4", title: "Short Box Series", sub: "Posture & balance" },
+  { src: "/videos/7.mp4", title: "Single Leg Carriage Press", sub: "Hip stability & leg strength" },
+  { src: "/videos/8.mp4", title: "Core Series", sub: "Deep core activation" },
 ];
 
 /* ─── animated counter hook ────────────────────────────────────────── */
@@ -426,7 +426,7 @@ export default function Home() {
           className="relative z-10 mx-auto max-w-4xl px-6 text-center"
         >
           <motion.p variants={fadeUp} className="eyebrow text-[#00C8D7] mb-6 tracking-[0.4em]">
-            Intro Offer
+            New Client Offer
           </motion.p>
           <motion.h2
             variants={fadeUp}
